@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Robs\Component\App;
 
+use Robs\Component\Renderer\Exception\RenderException;
 use Robs\Component\Renderer\Helper\IncludeFile;
 use Robs\Component\Renderer\Renderer;
+use Robs\Component\Router\Exception\RouterException;
 use Robs\Component\Router\RouteMethod;
 use Robs\Component\Router\Router;
 use Robs\Component\Router\RouteType;
@@ -16,6 +18,10 @@ class Bootstrap
     {
     }
 
+    /**
+     * @throws RenderException
+     * @throws RouterException
+     */
     public function run(string $uri, string $method): void
     {
         $path = parse_url($uri, PHP_URL_PATH);
