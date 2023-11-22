@@ -1,0 +1,48 @@
+{
+  "name": "robertkleinschuster/component-app",
+  "description": "A component oriented server side rendering engine for PHP",
+  "homepage": "https://github.com/construct-blue/snappy-renderer",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Robert Kleinschuster",
+      "email": "snappy@kleinschuster.de",
+      "homepage": "https://www.robs.social",
+      "role": "Developer"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/robertkleinschuster/component-router.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/robertkleinschuster/component-renderer.git"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "robertkleinschuster/component-router": "dev-main",
+    "robertkleinschuster/component-renderer": "dev-main"
+  },
+  "autoload": {
+    "psr-4": {
+      "Robs\\Component\\App\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Robs\\Component\\AppTest\\": "tests"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.4.1",
+    "phpstan/phpstan": "^1.10.21"
+  },
+  "scripts": {
+    "phpunit": "phpunit tests",
+    "phpstan": "phpstan analyse src --level 6"
+  }
+}
