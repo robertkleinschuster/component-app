@@ -11,10 +11,11 @@ use Robs\Component\Router\Exception\RouterException;
 use Robs\Component\Router\RouteMethod;
 use Robs\Component\Router\Router;
 use Robs\Component\Router\RouteType;
+use Slim\App;
 
-class Bootstrap
+readonly class Bootstrap
 {
-    public function __construct(private readonly Router $router, private readonly Renderer $renderer)
+    public function __construct(private App $app, private Router $router, private Renderer $renderer)
     {
     }
 
@@ -22,39 +23,21 @@ class Bootstrap
      * @throws RenderException
      * @throws RouterException
      */
-    public function run(string $uri, string $method): void
+    public function run(): void
     {
-        $path = parse_url($uri, PHP_URL_PATH);
+        $routes = $this->router->getAllRoutes();
 
-        $routeMethod = match ($method) {
-            'GET' => RouteMethod::GET,
-            'POST' => RouteMethod::POST,
-            'PUT' => RouteMethod::PUT,
-            'PATCH' => RouteMethod::PATCH,
-            'CONNECT' => RouteMethod::CONNECT,
-            'DELETE' => RouteMethod::DELETE,
-            'HEAD' => RouteMethod::HEAD,
-            'OPTIONS' => RouteMethod::OPTIONS,
-            'TRACE' => RouteMethod::TRACE,
-        };
+        $this->app->addRoutingMiddleware();
+        $this->app->addErrorMiddleware(true, true, true);
 
-        $route = $this->router->match($routeMethod, $path);
-
-        if ($route->type == RouteType::PAGE) {
-            if ($route->layout) {
-                echo $this->renderer->render(
-                    new IncludeFile($route->layout),
-                    $this->renderer->args([
-                        'children' => new IncludeFile($route->file)
-                    ])
-                );
-            } else {
-                echo $this->renderer->render(new IncludeFile($route->file));
-            }
+        foreach ($routes as $route) {
+            $this->app->map(
+                [$route->method->name],
+                $route->path,
+                new RouteHandler($route, $this->renderer)
+            )->setName($route->name);
         }
 
-        if ($route->type == RouteType::HANDLER) {
-            $route->getHandler()();
-        }
+        $this->app->run();
     }
 }
