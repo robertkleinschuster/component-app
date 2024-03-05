@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+const PREFIX = 'APP_CONFIG_';
+
+$env = [];
+foreach (array_keys(getenv()) as $key) {
+    if (str_starts_with($key, PREFIX)) {
+        $env[substr($key, strlen(PREFIX))] = getenv($key);
+    }
+}
+
+foreach ($argv as $arg) {
+    if (str_contains($arg, '=')) {
+        [$key, $value] = explode('=', $arg);
+        $env[strtoupper($key)] = $value;
+    }
+}
+
+$exported = var_export($env, true);
+
+$code = <<<PHP
+<?php
+
+return $exported;
+PHP;
+
+file_put_contents('config.php', $code);

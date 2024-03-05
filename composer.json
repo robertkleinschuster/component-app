@@ -1,0 +1,53 @@
+{
+  "name": "robertkleinschuster/zenith",
+  "description": "A Component App Framework for PHP",
+  "type": "library",
+  "license": "MIT",
+  "version": "v0.0.1",
+  "authors": [
+    {
+      "name": "Robert Kleinschuster",
+      "email": "github@robs.social",
+      "homepage": "https://www.robs.social",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "robertkleinschuster/compass": "v0.0.1",
+    "robertkleinschuster/mosaic": "v0.0.1",
+    "slim/slim": "^4.12",
+    "slim/psr7": "^1.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Zenith\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ZenithTest\\": "tests"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.4.1",
+    "phpstan/phpstan": "^1.10.21"
+  },
+  "bin": [
+    "bin/configure-app",
+    "bin/add-route"
+  ],
+  "scripts": {
+    "post-install-cmd": [
+      "@configure"
+    ],
+    "configure": "bin/configure-app",
+    "add-route": "bin/add-route",
+    "phpunit": "phpunit tests",
+    "phpstan": "phpstan analyse src --level 6",
+    "dev": [
+      "Composer\\Config::disableProcessTimeout",
+      "php -S localhost:8080 -t public public/index.php"
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+$route = '/' . rtrim(ltrim($argv[1] ?? '', '/'), '/');
+
+$page = <<<PHP
+<?php
+
+return function(\Robs\Component\Renderer\Renderer \$renderer, array \$params, array \$queryParams) {
+    yield \$renderer->fragment("<h1>$route</h1>");
+};
+PHP;
+
+$layout = <<<PHP
+<?php
+
+return function(\Robs\Component\Renderer\Renderer \$renderer, \$children, array \$params, array \$queryParams) {
+    yield \$renderer->fragment("<div>");
+    yield \$children;
+    yield \$renderer->fragment("</div>");
+};
+PHP;
+
+$path = 'routes' . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, array_filter(explode('/', $route)));
+if (is_dir($path)) {
+    echo "Already exists\n";
+} else {
+    mkdir($path, 0777, true);
+    file_put_contents("$path/page.php", $page);
+    file_put_contents("$path/layout.php", $layout);
+}
