@@ -15,7 +15,7 @@ use Throwable;
 
 readonly class PageHandler
 {
-    public function __construct(private Renderer $renderer, private Route $route)
+    public function __construct(private AppConfig $config, private Renderer $renderer, private Route $route)
     {
     }
 
@@ -37,7 +37,7 @@ readonly class PageHandler
             );
 
             $response->getBody()->write(
-                (string)$this->renderer->render($page, request: $request, response: $response)
+                (string)$this->renderer->render($page, config: $this->config, request: $request, response: $response)
             );
             return $response->withHeader('Content-Type', 'text/html');
         } catch (RenderException $exception) {

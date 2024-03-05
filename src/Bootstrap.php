@@ -30,7 +30,7 @@ readonly class Bootstrap
         $this->app->post('/.deploy', new DeployAction($this->config, $this->router));
 
         foreach ($routes as $route) {
-            $this->route('GET', $route->getPath(), new PageHandler($this->renderer, $route), $route->getName());
+            $this->route('GET', $route->getPath(), new PageHandler($this->config, $this->renderer, $route), $route->getName());
             if ($route->getAction()) {
                 $this->route('POST', $route->getPath(), new ActionHandler($this->config, $route), $route->getName());
             }
