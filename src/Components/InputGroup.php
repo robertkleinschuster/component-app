@@ -13,7 +13,7 @@ readonly class InputGroup implements Renderable
     {
     }
 
-    public function render(Renderer $renderer, mixed $data = null): iterable
+    public function render(Renderer $renderer, mixed $data): iterable
     {
         yield new Label([
             $this->label,

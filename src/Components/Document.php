@@ -30,7 +30,7 @@ readonly class Document implements Renderable
      * @throws RenderException
      * @throws Throwable
      */
-    public function render(Renderer $renderer, mixed $data = null): iterable
+    public function render(Renderer $renderer, mixed $data): iterable
     {
         yield new Fragment(<<<HTML
 <html lang="$this->lang">

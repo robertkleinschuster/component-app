@@ -14,7 +14,7 @@ readonly class Stylesheet implements Renderable
     {
     }
 
-    public function render(Renderer $renderer, mixed $data = null): iterable
+    public function render(Renderer $renderer, mixed $data): iterable
     {
         yield new Fragment(<<<HTML
 <link rel="stylesheet" href="$this->href">

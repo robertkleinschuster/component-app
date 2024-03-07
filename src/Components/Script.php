@@ -14,7 +14,7 @@ readonly class Script implements Renderable
     {
     }
 
-    public function render(Renderer $renderer, mixed $data = null): iterable
+    public function render(Renderer $renderer, mixed $data): iterable
     {
         yield new Fragment(<<<HTML
 <script src="$this->src"></script>

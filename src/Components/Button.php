@@ -23,7 +23,7 @@ readonly class Button implements Renderable
      * @throws RenderException
      * @throws Throwable
      */
-    public function render(Renderer $renderer, mixed $data = null): iterable
+    public function render(Renderer $renderer, mixed $data): iterable
     {
         yield new Fragment(<<<HTML
 <button type="$this->type">{$renderer->render($this->children)}</button>

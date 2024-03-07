@@ -23,7 +23,7 @@ readonly class Link implements Renderable
      * @throws RenderException
      * @throws Throwable
      */
-    public function render(Renderer $renderer, mixed $data = null): iterable
+    public function render(Renderer $renderer, mixed $data): iterable
     {
         $url = $renderer->render($this->url);
         $children = $this->children ?? $url;

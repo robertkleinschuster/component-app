@@ -17,7 +17,7 @@ readonly class Dependencies implements Renderable
     {
     }
 
-    public function render(Renderer $renderer, mixed $data = null): iterable
+    public function render(Renderer $renderer, mixed $data): iterable
     {
         foreach ($this->scripts as $script) {
             yield new Script($script);
