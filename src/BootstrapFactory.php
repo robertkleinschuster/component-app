@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Zenith;
 
+use Compass\RouteCollector;
 use Zenith\Plugin\ConfigStrategyFactory;
 use Zenith\Plugin\UrlStrategyFactory;
 use Mosaic\Renderer;
 use Mosaic\StrategyPipelineFactory;
-use Compass\Router;
 use Compass\RoutesCache;
 use Slim\Factory\AppFactory;
 
@@ -17,7 +17,7 @@ class BootstrapFactory
     public function create(string $routes, string $config, string $cache = null): Bootstrap
     {
         $config = new AppConfig($config);
-        $router = new Router(
+        $router = new RouteCollector(
             directory: $routes,
             cache: $cache && $config->is(AppConfig::ENVIRONMENT, 'production') ? new RoutesCache($cache) : null,
         );

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Zenith;
 
+use Compass\RouteCollector;
 use Mosaic\Renderer;
-use Compass\Router;
 use Slim\App;
 
 readonly class Bootstrap
 {
-    public function __construct(private AppConfig $config, private App $app, private Router $router, private Renderer $renderer)
+    public function __construct(private AppConfig $config, private App $app, private RouteCollector $router, private Renderer $renderer)
     {
     }
 
